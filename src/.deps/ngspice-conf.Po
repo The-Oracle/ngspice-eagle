@@ -1,0 +1,5 @@
+ngspice-conf.o: conf.c ../src/include/ngspice/config.h conf.h
+
+../src/include/ngspice/config.h:
+
+conf.h:

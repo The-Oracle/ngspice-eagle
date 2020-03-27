@@ -1,0 +1,11 @@
+prefix=/Users/diradmin/Downloads/ngspice-31/root-tree/Applications/ngspice
+exec_prefix=/Users/diradmin/Downloads/ngspice-31/root-tree/Applications/ngspice
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libngspice
+Description: General-purpose circuit simulator
+Version: 31
+Libs: -L${libdir} -lngspice
+Cflags: -I${includedir}
+

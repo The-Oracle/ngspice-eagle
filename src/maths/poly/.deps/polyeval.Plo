@@ -1,0 +1,3 @@
+polyeval.lo: polyeval.c polyeval.h
+
+polyeval.h:

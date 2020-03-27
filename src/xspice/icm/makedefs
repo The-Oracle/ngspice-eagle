@@ -1,0 +1,76 @@
+# -*- makefile -*-
+
+# Edit this file to set global include paths,
+# compiler info and subdirs
+
+# Directory sturcture
+SHELL = /bin/sh
+srcdir = .
+top_builddir = ../../..
+top_srcdir = ../../..
+subdir = src/xspice/icm
+MKDIR_P = /usr/local/bin/gmkdir -p
+uname = $(shell uname)
+
+# C compiler to use
+CC = gcc
+CFLAGS = -O2 -s -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes -Wnested-externs -Wold-style-definition -Wredundant-decls -Wconversion -Wno-unused-but-set-variable
+VIS_CFLAGS = -fvisibility=hidden
+EXEEXT = 
+BUILD_EXEEXT = 
+
+# Spice header include path
+INCLUDES = -I$(top_builddir)/src/include -I$(top_srcdir)/src/include
+
+# CFLAGS to use here
+EXTRA_CFLAGS = -fPIC
+DEPFLAGS = -MD -MF
+ISMINGW = $(shell uname | grep -c "MINGW32")
+ifeq ($(ISMINGW), 1)
+  EXTRA_CFLAGS =
+endif
+ISCYGWIN = $(shell uname | grep -c "CYGWIN")
+ifeq ($(ISCYGWIN), 1)
+  EXTRA_CFLAGS =
+endif
+ISSUNOS = $(shell uname | grep -c "SunOS")
+ifeq ($(ISSUNOS), 1)
+  ifneq "$(CC)" "gcc"
+    EXTRA_CFLAGS = -KPIC
+    DEPFLAGS = -xMD -xMF
+  endif
+endif
+
+# Path to the cmpp utility
+CMPP = $(top_builddir)/src/xspice/cmpp/cmpp$(EXEEXT)
+
+LIBS = -lm
+
+# Flags to use when linking shared library
+LDFLAGS = -shared
+ifeq ($(ISMINGW), 1)
+  LDFLAGS = -shared 
+endif
+ifeq "$(strip $(uname))" "Darwin"
+  LDFLAGS = -bundle -flat_namespace -undefined suppress
+endif
+ifeq "$(strip $(uname))" "SunOS"
+  ifneq "$(CC)" "gcc"
+    LDFLAGS = -G
+  endif
+endif
+
+# Install instructions
+
+INSTALL = /usr/local/bin/ginstall -c
+INSTALL_DATA = ${INSTALL} -m 644
+INSTALL_PROGRAM = ${INSTALL}
+
+prefix = /Users/diradmin/Downloads/ngspice-31/root-tree/Applications/ngspice
+exec_prefix = /Users/diradmin/Downloads/ngspice-31/root-tree/Applications/ngspice
+libdir = ${exec_prefix}/lib
+pkglibdir = $(libdir)/ngspice
+datarootdir = ${prefix}/share
+datadir = ${datarootdir}
+pkgdatadir = $(datadir)/ngspice
+

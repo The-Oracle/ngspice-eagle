@@ -1,0 +1,16 @@
+#!/bin/bash
+echo "Running postinstall" > /tmp/ngspice_postinstall.log
+declare -a EAGLEINSTALLS=(/Applications/EAGLE-*) 
+for EAGLEINSTALL in ${EAGLEINSTALLS[@]}
+do
+    if [[ -e ${EAGLEINSTALL}/ngspice ]]; then
+	echo "Moving old ngspice to a backup directory" >> /tmp/ngspice_postinstall.log
+	sudo mv ${EAGLEINSTALL}/ngspice ${EAGLEINSTALL}/old-ngspice
+	echo "Copying new ngspice to EAGLE Installation directory [${EAGLEINSTALL}]" >> /tmp/ngspice_postinstall.log
+	sudo -u `id -un` cp -R /Applications/ngspice ${EAGLEINSTALL}/
+    else
+	echo "Copying new ngspice to EAGLE Installation directory [${EAGLEINSTALL}]" >> /tmp/ngspice_postinstall.log
+	sudo -u `id -un` cp -R /Applications/ngspice ${EAGLEINSTALL}/
+    fi
+done
+exit 0

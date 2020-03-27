@@ -1,0 +1,3 @@
+matlib.lo: matlib.c matlib.h
+
+matlib.h:

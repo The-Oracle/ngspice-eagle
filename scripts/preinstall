@@ -1,0 +1,14 @@
+#!/bin/bash
+declare LATESTEAGLE="EAGLE-9.6.0"
+echo "Running preinstall" > /tmp/ngspice_preinstall.log
+echo "EAGLE 9.6.0 does not exist, create a placeholder directory" >> /tmp/ngspice_preinstall.log
+declare -a EAGLEINSTALLS=(/Applications/EAGLE-*)
+for EAGLEINSTALL in ${EAGLEINSTALLS[@]}
+do
+    if [[ "${EAGLEINSTALL}" == "" ]]; then
+	echo "EAGLE does not exist, create a placeholder directory" >> /tmp/ngspice_preinstall.log
+	sudo -u `id -un` mkdir /Applications/${LATESTEAGLE}
+	sudo -u `id -un` chmod 0775 /Applications/${LATESTEAGLE}
+    fi
+done
+exit 0
